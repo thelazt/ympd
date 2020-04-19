@@ -209,6 +209,12 @@ function webSocketConnect() {
             socket.send('MPD_API_GET_OUTPUTS');
             /* emit initial request for dirble api token */
             socket.send('MPD_API_GET_DIRBLEAPITOKEN');
+
+            var url = new URL(window.location.href);
+            var playurl = url.searchParams.get("playurl");
+            if (playurl != null) {
+                socket.send("MPD_API_ADD_PLAY_TRACK,"+playurl);
+            }
         }
 
         socket.onmessage = function got_packet(msg) {
